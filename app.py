@@ -11,7 +11,7 @@ st.set_page_config(
 )
 
 st.title("Sentinel-2 Satellite Imagery Finder")
-st.write("Satellite images appear below the maps if parameters matches with the satellite imaging system.")
+st.markdown("Satellite images appear below the maps if parameters matches with the satellite imaging system.")
 
 def search_satellite_imagery(lat, lon, start_date, end_date, location_name):
     st.subheader(f"Searching imagery for {location_name}")
