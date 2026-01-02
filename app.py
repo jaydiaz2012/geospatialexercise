@@ -11,13 +11,13 @@ st.set_page_config(
 )
 
 st.title("Sentinel-2 Satellite Imagery Finder")
+st.text("Satellite images appear below the maps if parameters matches with the satellite imaging system.")
 
 def search_satellite_imagery(lat, lon, start_date, end_date, location_name):
     st.subheader(f"Searching imagery for {location_name}")
     st.write(f"Coordinates: {lat}, {lon}")
     st.write(f"Date range: {start_date} to {end_date}")
-    st.write("Satellite images appear below the maps if parameters matches with the satellite imaging system.")
-
+    
     api_url = "https://earth-search.aws.element84.com/v1"
     client = Client.open(api_url)
 
