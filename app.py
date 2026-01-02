@@ -141,6 +141,7 @@ def search_satellite_imagery(lat, lon, start_date, end_date, location_name):
         key=lambda x: x.properties.get("eo:cloud_cover", 100)
     )[0]
 
+    st.session_state.best_item = best_item
     st.success("Best available image")
     st.write(f"Scene ID: {best_item.id}")
     st.write(f"Acquisition time: {best_item.datetime}")
@@ -153,6 +154,22 @@ def search_satellite_imagery(lat, lon, start_date, end_date, location_name):
         )
     
     return best_item
+
+if "best_item" in st.session_state:
+    footprint = st.session_state.best_item.geometry
+
+    folium.GeoJson(
+        footprint,
+        name="Sentinel-2 Footprint",
+        style_function=lambda x: {
+            "fillColor": "#3186cc",
+            "color": "#3186cc",
+            "weight": 2,
+            "fillOpacity": 0.2,
+        },
+        tooltip="Sentinel-2 scene footprint"
+    ).add_to(m)
+
 # --------------------------------------------------
 # Search form
 # --------------------------------------------------
@@ -196,8 +213,3 @@ if st.session_state.auto_search:
 
 # Reset trigger after running
 st.session_state.auto_search = False
-
-with st.spinner("Searching Sentinel-2 imagery..."):
-    search_satellite_imagery(...)
-
-st.session_state.last_search_time
