@@ -90,7 +90,7 @@ with st.form("search_form"):
     )
 
     submitted = st.form_submit_button("Search imagery")
-    
+    st.write("Satellite images appear below the maps if parameters matches with the satellite imaging system.")
 st.subheader("Select location on map")
 
 # Default centre
