@@ -63,8 +63,6 @@ def search_satellite_imagery(lat, lon, start_date, end_date, location_name):
     return best_item
 
 st.subheader("Select location on map")
-# Default centre
-map_center = [lat, lon]
 
 m = folium.Map(
     location=map_center,
@@ -82,6 +80,9 @@ map_data = st_folium(
     height=450,
     width=700
 )
+
+# Default centre
+map_center = [lat, lon]
 
 # If user clicks on the map, update lat/lon
 if map_data and map_data.get("last_clicked"):
