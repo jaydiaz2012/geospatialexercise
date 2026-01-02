@@ -11,6 +11,7 @@ st.set_page_config(
 )
 
 st.title("Sentinel-2 Satellite Imagery Finder")
+st.write("Satellite images appear below the maps if parameters matches with the satellite imaging system.")
 
 def search_satellite_imagery(lat, lon, start_date, end_date, location_name):
     st.subheader(f"Searching imagery for {location_name}")
@@ -90,7 +91,7 @@ with st.form("search_form"):
     )
 
     submitted = st.form_submit_button("Search imagery")
-    st.write("Satellite images appear below the maps if parameters matches with the satellite imaging system.")
+st.write("Satellite images appear below the maps if parameters matches with the satellite imaging system.")
 st.subheader("Select location on map")
 
 # Default centre
