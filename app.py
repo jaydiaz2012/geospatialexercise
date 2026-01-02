@@ -153,12 +153,6 @@ def search_satellite_imagery(lat, lon, start_date, end_date, location_name):
         )
     
     return best_item
-
-with st.spinner("Searching Sentinel-2 imagery..."):
-    search_satellite_imagery(...)
-
-st.session_state.last_search_time
-
 # --------------------------------------------------
 # Search form
 # --------------------------------------------------
@@ -202,3 +196,8 @@ if st.session_state.auto_search:
 
 # Reset trigger after running
 st.session_state.auto_search = False
+
+with st.spinner("Searching Sentinel-2 imagery..."):
+    search_satellite_imagery(...)
+
+st.session_state.last_search_time
