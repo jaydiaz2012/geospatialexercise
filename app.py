@@ -64,7 +64,7 @@ def search_satellite_imagery(lat, lon, start_date, end_date, location_name):
 with st.form("search_form"):
     location_name = st.text_input(
         "Location name",
-        value="Golden Gate Bridge"
+        value="Input Location Name"
     )
 
     lat = st.number_input(
