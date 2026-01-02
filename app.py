@@ -90,15 +90,7 @@ with st.form("search_form"):
     )
 
     submitted = st.form_submit_button("Search imagery")
-
-if submitted:
-    search_satellite_imagery(
-        lat,
-        lon,
-        start_date.isoformat(),
-        end_date.isoformat(),
-        location_name
-    )
+    
 st.subheader("Select location on map")
 
 # Default centre
@@ -131,3 +123,12 @@ st.map(
     data={"lat": [lat], "lon": [lon]},
     zoom=12
 )
+
+if submitted:
+    search_satellite_imagery(
+        lat,
+        lon,
+        start_date.isoformat(),
+        end_date.isoformat(),
+        location_name
+    )
