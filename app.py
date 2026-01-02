@@ -176,14 +176,14 @@ with st.form("search_form"):
 
     submitted = st.form_submit_button("Search imagery")
 
-#if submitted:
-#    search_satellite_imagery(
-#        st.session_state.lat,
-#        st.session_state.lon,
-#        start_date.isoformat(),
-#        end_date.isoformat(),
-#        location_name
-#    )
+if submitted:
+    search_satellite_imagery(
+        st.session_state.lat,
+        st.session_state.lon,
+        start_date.isoformat(),
+        end_date.isoformat(),
+        location_name
+    )
 
 if st.session_state.auto_search:
     search_satellite_imagery(
@@ -194,5 +194,5 @@ if st.session_state.auto_search:
         location_name
     )
 
-    # Reset trigger after running
-    st.session_state.auto_search = False
+# Reset trigger after running
+st.session_state.auto_search = False
