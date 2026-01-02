@@ -62,35 +62,6 @@ def search_satellite_imagery(lat, lon, start_date, end_date, location_name):
 
     return best_item
 
-with st.form("search_form"):
-    location_name = st.text_input(
-        "Location name",
-        value="Input Location Name."
-    )
-
-    lat = st.number_input(
-        "Latitude",
-        value=37.8199,
-        format="%.6f"
-    )
-
-    lon = st.number_input(
-        "Longitude",
-        value=-122.4783,
-        format="%.6f"
-    )
-
-    start_date = st.date_input(
-        "Start date",
-        value=datetime.date(2025, 12, 1)
-    )
-
-    end_date = st.date_input(
-        "End date",
-        value=datetime.date(2025, 12, 31)
-    )
-
-    submitted = st.form_submit_button("Search imagery")
 st.subheader("Select location on map")
 # Default centre
 map_center = [lat, lon]
@@ -128,6 +99,37 @@ if map_data and map_data.get("last_clicked"):
 
 lat = st.number_input("Latitude", value=st.session_state.lat, format="%.6f")
 lon = st.number_input("Longitude", value=st.session_state.lon, format="%.6f")
+
+with st.form("search_form"):
+    location_name = st.text_input(
+        "Location name",
+        value="Input Location Name."
+    )
+
+    lat = st.number_input(
+        "Latitude",
+        value=37.8199,
+        format="%.6f"
+    )
+
+    lon = st.number_input(
+        "Longitude",
+        value=-122.4783,
+        format="%.6f"
+    )
+
+    start_date = st.date_input(
+        "Start date",
+        value=datetime.date(2025, 12, 1)
+    )
+
+    end_date = st.date_input(
+        "End date",
+        value=datetime.date(2025, 12, 31)
+    )
+
+    submitted = st.form_submit_button("Search imagery")
+
 
 if submitted:
     search_satellite_imagery(
