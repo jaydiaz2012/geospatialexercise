@@ -64,26 +64,6 @@ def search_satellite_imagery(lat, lon, start_date, end_date, location_name):
 
 st.subheader("Select location on map")
 
-m = folium.Map(
-    location=map_center,
-    zoom_start=12,
-    tiles="OpenStreetMap"
-)
-
-folium.Marker(
-    map_center,
-    tooltip="Current location"
-).add_to(m)
-
-map_data = st_folium(
-    m,
-    height=450,
-    width=700
-)
-
-# Default centre
-map_center = [lat, lon]
-
 # If user clicks on the map, update lat/lon
 if map_data and map_data.get("last_clicked"):
     lat = map_data["last_clicked"]["lat"]
@@ -100,6 +80,26 @@ if map_data and map_data.get("last_clicked"):
 
 lat = st.number_input("Latitude", value=st.session_state.lat, format="%.6f")
 lon = st.number_input("Longitude", value=st.session_state.lon, format="%.6f")
+
+# Default centre
+map_center = [lat, lon]
+
+m = folium.Map(
+    location=map_center,
+    zoom_start=12,
+    tiles="OpenStreetMap"
+)
+
+folium.Marker(
+    map_center,
+    tooltip="Current location"
+).add_to(m)
+
+map_data = st_folium(
+    m,
+    height=450,
+    width=700
+)
 
 with st.form("search_form"):
     location_name = st.text_input(
@@ -130,7 +130,6 @@ with st.form("search_form"):
     )
 
     submitted = st.form_submit_button("Search imagery")
-
 
 if submitted:
     search_satellite_imagery(
