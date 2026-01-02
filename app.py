@@ -126,23 +126,8 @@ def search_satellite_imagery(lat, lon, start_date, end_date, location_name):
             best_item.assets["thumbnail"].href,
             caption="Sentinel-2 thumbnail"
         )
-
-    st.session_state.best_item = best_item
-    if "best_item" in st.session_state:
-        footprint = st.session_state.best_item.geometry
-        folium.GeoJson(
-            footprint,
-            name="Sentinel-2 Footprint",
-            style_function=lambda x: {
-                "fillColor": "#3186cc",
-                "color": "#3186cc",
-                "weight": 2,
-                "fillOpacity": 0.2,
-            },
-            tooltip="Sentinel-2 scene footprint"
-        ).add_to(m)
-        
-        return best_item
+    
+    return best_item
 # --------------------------------------------------
 # Search form
 # --------------------------------------------------
