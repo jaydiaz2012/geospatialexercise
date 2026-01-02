@@ -26,14 +26,6 @@ if "lat" not in st.session_state:
     st.session_state.lat = 37.8199
     st.session_state.lon = -122.4783
 
-if "auto_search" not in st.session_state:
-    st.session_state.auto_search = False
-
-if "last_click" not in st.session_state:
-    st.session_state.last_click = None
-
-
-
 # --------------------------------------------------
 # Map selector
 # --------------------------------------------------
@@ -59,31 +51,14 @@ map_data = st_folium(
 )
 
 # Update session state on map click
-#if map_data and map_data.get("last_clicked"):
-#    st.session_state.lat = map_data["last_clicked"]["lat"]
-#    st.session_state.lon = map_data["last_clicked"]["lng"]
-
-#    st.success(
-#        f"Selected coordinates: "
-#        f"{st.session_state.lat:.6f}, {st.session_state.lon:.6f}"
-#    )
-
 if map_data and map_data.get("last_clicked"):
-    click = map_data["last_clicked"]
+    st.session_state.lat = map_data["last_clicked"]["lat"]
+    st.session_state.lon = map_data["last_clicked"]["lng"]
 
-    # Detect a NEW click only
-    if st.session_state.last_click != click:
-        st.session_state.last_click = click
-        st.session_state.lat = click["lat"]
-        st.session_state.lon = click["lng"]
-
-        # Trigger auto search
-        st.session_state.auto_search = True
-
-        st.success(
-            f"Selected coordinates: "
-            f"{st.session_state.lat:.6f}, {st.session_state.lon:.6f}"
-        )
+    st.success(
+        f"Selected coordinates: "
+        f"{st.session_state.lat:.6f}, {st.session_state.lon:.6f}"
+    )
 
 # --------------------------------------------------
 # Coordinate inputs (synced with map)
@@ -141,7 +116,6 @@ def search_satellite_imagery(lat, lon, start_date, end_date, location_name):
         key=lambda x: x.properties.get("eo:cloud_cover", 100)
     )[0]
 
-    st.session_state.best_item = best_item
     st.success("Best available image")
     st.write(f"Scene ID: {best_item.id}")
     st.write(f"Acquisition time: {best_item.datetime}")
@@ -152,29 +126,33 @@ def search_satellite_imagery(lat, lon, start_date, end_date, location_name):
             best_item.assets["thumbnail"].href,
             caption="Sentinel-2 thumbnail"
         )
-    
+
     return best_item
-
-if "best_item" in st.session_state:
-    footprint = st.session_state.best_item.geometry
-
-    folium.GeoJson(
-        footprint,
-        name="Sentinel-2 Footprint",
-        style_function=lambda x: {
-            "fillColor": "#3186cc",
-            "color": "#3186cc",
-            "weight": 2,
-            "fillOpacity": 0.2,
-        },
-        tooltip="Sentinel-2 scene footprint"
-    ).add_to(m)
 
 # --------------------------------------------------
 # Search form
 # --------------------------------------------------
+st.subheader("Search parameters")
 
-if st.session_state.auto_search:
+with st.form("search_form"):
+    location_name = st.text_input(
+        "Location name",
+        value="Input location name"
+    )
+
+    start_date = st.date_input(
+        "Start date",
+        value=datetime.date(2025, 12, 1)
+    )
+
+    end_date = st.date_input(
+        "End date",
+        value=datetime.date(2025, 12, 31)
+    )
+
+    submitted = st.form_submit_button("Search imagery")
+
+if submitted:
     search_satellite_imagery(
         st.session_state.lat,
         st.session_state.lon,
@@ -182,29 +160,3 @@ if st.session_state.auto_search:
         end_date.isoformat(),
         location_name
     )
-
-    # Reset trigger after running
-    st.session_state.auto_search = False
-
-#st.subheader("Search parameters")
-
-#with st.form("search_form"):
-#    location_name = st.text_input(
-#        "Location name",
-#        value="Input location name"
-#    )
-
- #   start_date = st.date_input(
- #       "Start date",
- #       value=datetime.date(2025, 12, 1)
- #   )
-
- #   end_date = st.date_input(
- #       "End date",
- #       value=datetime.date(2025, 12, 31)
- #   )
-
- #   submitted = st.form_submit_button("Search imagery")
-
-# Reset trigger after running
-#st.session_state.auto_search = False
