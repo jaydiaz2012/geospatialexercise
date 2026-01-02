@@ -173,34 +173,6 @@ if "best_item" in st.session_state:
 # --------------------------------------------------
 # Search form
 # --------------------------------------------------
-st.subheader("Search parameters")
-
-with st.form("search_form"):
-    location_name = st.text_input(
-        "Location name",
-        value="Input location name"
-    )
-
-    start_date = st.date_input(
-        "Start date",
-        value=datetime.date(2025, 12, 1)
-    )
-
-    end_date = st.date_input(
-        "End date",
-        value=datetime.date(2025, 12, 31)
-    )
-
-    submitted = st.form_submit_button("Search imagery")
-
-if submitted:
-    search_satellite_imagery(
-        st.session_state.lat,
-        st.session_state.lon,
-        start_date.isoformat(),
-        end_date.isoformat(),
-        location_name
-    )
 
 if st.session_state.auto_search:
     search_satellite_imagery(
@@ -211,5 +183,28 @@ if st.session_state.auto_search:
         location_name
     )
 
+    # Reset trigger after running
+    st.session_state.auto_search = False
+
+#st.subheader("Search parameters")
+
+#with st.form("search_form"):
+#    location_name = st.text_input(
+#        "Location name",
+#        value="Input location name"
+#    )
+
+ #   start_date = st.date_input(
+ #       "Start date",
+ #       value=datetime.date(2025, 12, 1)
+ #   )
+
+ #   end_date = st.date_input(
+ #       "End date",
+ #       value=datetime.date(2025, 12, 31)
+ #   )
+
+ #   submitted = st.form_submit_button("Search imagery")
+
 # Reset trigger after running
-st.session_state.auto_search = False
+#st.session_state.auto_search = False
