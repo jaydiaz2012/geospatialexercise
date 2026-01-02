@@ -119,11 +119,6 @@ if map_data and map_data.get("last_clicked"):
     lon = map_data["last_clicked"]["lng"]
     st.success(f"Selected point: {lat:.6f}, {lon:.6f}")
 
-st.map(
-    data={"lat": [lat], "lon": [lon]},
-    zoom=12
-)
-
 if submitted:
     search_satellite_imagery(
         lat,
@@ -132,3 +127,14 @@ if submitted:
         end_date.isoformat(),
         location_name
     )
+
+if "lat" not in st.session_state:
+    st.session_state.lat = 37.8199
+    st.session_state.lon = -122.4783
+
+if map_data and map_data.get("last_clicked"):
+    st.session_state.lat = map_data["last_clicked"]["lat"]
+    st.session_state.lon = map_data["last_clicked"]["lng"]
+
+lat = st.number_input("Latitude", value=st.session_state.lat, format="%.6f")
+lon = st.number_input("Longitude", value=st.session_state.lon, format="%.6f")
