@@ -65,7 +65,7 @@ def search_satellite_imagery(lat, lon, start_date, end_date, location_name):
 with st.form("search_form"):
     location_name = st.text_input(
         "Location name",
-        value="Input Location Name. Satellite images appear below the maps if parameters matches with the satellite imaging system."
+        value="Input Location Name."
     )
 
     lat = st.number_input(
