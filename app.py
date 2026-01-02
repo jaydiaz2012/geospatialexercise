@@ -2,10 +2,44 @@ import streamlit as st
 import datetime
 from pystac_client import Client
 from shapely.geometry import Point
+import folium
+from streamlit_folium import st_folium
 
 st.set_page_config(
     page_title="Satellite Imagery Search",
     layout="centered"
+)
+st.subheader("Select location on map")
+
+# Default centre
+map_center = [lat, lon]
+
+m = folium.Map(
+    location=map_center,
+    zoom_start=12,
+    tiles="OpenStreetMap"
+)
+
+folium.Marker(
+    map_center,
+    tooltip="Current location"
+).add_to(m)
+
+map_data = st_folium(
+    m,
+    height=450,
+    width=700
+)
+
+# If user clicks on the map, update lat/lon
+if map_data and map_data.get("last_clicked"):
+    lat = map_data["last_clicked"]["lat"]
+    lon = map_data["last_clicked"]["lng"]
+    st.success(f"Selected point: {lat:.6f}, {lon:.6f}")
+
+st.map(
+    data={"lat": [lat], "lon": [lon]},
+    zoom=12
 )
 
 st.title("Sentinel-2 Satellite Imagery Finder")
