@@ -1,7 +1,3 @@
-# CLAUDE.md
-
-This file provides guidance for AI assistants working on the `geospatialexercise` codebase.
-
 ## Project Overview
 
 This is a Streamlit web application that allows users to search for and preview **Sentinel-2 satellite imagery** via an interactive map interface. Users can click a location on a Folium map, set a date range, and retrieve the lowest-cloud-cover Sentinel-2 scene for that location using the AWS Element84 STAC API.
